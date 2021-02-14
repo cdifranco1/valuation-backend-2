@@ -209,12 +209,5 @@ function buildDCF(DCFInput) {
   dcf.calcTerminalValue()
   dcf.sumPVOFDiscountedFCF()
 
-  console.log(dcf);
   return dcf;
 }
-
-
-
-
-
-buildDCF(DCF1);
