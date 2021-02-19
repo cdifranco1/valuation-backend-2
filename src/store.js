@@ -17,7 +17,7 @@ const createStore = () => {
   const client = new MongoClient(uri, { useNewUrlParser: true });
 
   client.connect((err, mongoClient) => {
-
+    console.log(err)
   });
 
 

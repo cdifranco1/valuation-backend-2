@@ -1,7 +1,18 @@
 
 const { buildDCF } = require("./services/DCF")
-
+const { GraphQLScalarType, Kind } = require('graphql');
 // dummy dcf data
+
+// const dateScalar = new GraphQLScalarType({
+//   name: 'Date',
+//   description: 'Date custom scalar type',
+//   serialize(value) {
+//     return new Date(value);
+//   },
+//   parseValue(value) {
+//     return value.getTime();
+//   }
+// });
 
 module.exports = {
   Query: {
@@ -13,15 +24,18 @@ module.exports = {
     // }
   },
   Mutation: {
-    createDCF: (_,  { dcfData }, { dataSources }) => {
-      
+    createDCF: async (_,  { dcfData }, { dataSources }) => {      
+
       const newDcf = buildDCF(dcfData);
 
-      return dataSources.dcfAPI.insertOne(newDcf)
+      try {
+        const newRecord = await dataSources.DCFStore.insertOne(newDcf);
+        console.log(newRecord);
+        return newRecord
+      } catch(err) {
+        console.log(err);
+      }
     },
-    // updateDCF: (_, { updateData }, { dataSources }) => {
-    //   return;
-    // }
   }
 }
 

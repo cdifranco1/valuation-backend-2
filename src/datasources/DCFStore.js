@@ -2,7 +2,7 @@ const { MongoDataSource } = require('apollo-datasource-mongodb')
 
 const DCF_COLLECTION = 'DCF';
 
-class DcfAPI extends MongoDataSource {
+class DCFStore extends MongoDataSource {
   constructor( store ) {
     super(store)
     this.store = store
@@ -15,16 +15,12 @@ class DcfAPI extends MongoDataSource {
     return mockDCF
   }
 
-  findOneById(dcfId) {
-    return this.store.findOneById(dcfId);
-  }
-
   async insertOne( dcfInput ) {
+
     try {
-      const dcf = await this.store.insertOne( dcfInput )
+      const { insertedId } = await this.store.insertOne( dcfInput )
 
-
-      return dcf;
+      return await this.findOneById(insertedId);
 
     } catch(error) {
       
@@ -37,4 +33,4 @@ class DcfAPI extends MongoDataSource {
 
 
 
-module.exports = DcfAPI;
+module.exports = DCFStore;

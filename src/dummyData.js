@@ -1,3 +1,9 @@
+
+const valDate = new Date("10/01/2020")
+console.log(valDate.getTime());
+const fye = new Date("12/31/2020")
+console.log(fye.getTime())
+
 module.exports = DCF1 = {
   forecasts: [
     {
@@ -37,12 +43,13 @@ module.exports = DCF1 = {
       riskFreeRate: 0.025,
       beta: 1.2,
       equityRiskPremium: 0.06,
+      bondRate: 0.05,
       taxRate: .25,
       debtToEquity: .6
     },
-    taxRate: .25,
-    valDate: "10-1-2019",
-    periods: 5
+    valDate,
+    fye,
+    periods: 5,
   }
 }
 

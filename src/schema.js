@@ -1,20 +1,21 @@
 const { gql } = require('apollo-server');
 
+
 const typeDefs = gql`
+  scalar Date
+
   # enum BeforeLineItem {
   #   GROSS_PROFIT,
   #   EBITDA,
   #   EBIT,
   #   NOPAT
   # }
-
   # CustomExpense {
   #   name: String,
   #   amount: Float!,
   #   beforeLineItem: BeforeLineItem
   #   cashOutlay: Boolean
   # }
-
   # CustomProfit {
   #   name: String,
   #   beforeLineItem: BeforeLineItem,
@@ -35,10 +36,11 @@ const typeDefs = gql`
 
   input DCFInput {
     forecasts: [ForecastInput],
-    assumptions: [AssumptionsInput]
+    assumptions: AssumptionsInput
   }
 
   type Forecast {
+    forecastPeriod: Int,
     revenue: Float,
     cogs: Float,
     grossProfit: Float,
@@ -56,15 +58,16 @@ const typeDefs = gql`
   input AssumptionsInput {
     ltgr: Float,
     discountRate: DiscountRateInput,
-    taxRate: Float
-    valDate: String,
+    taxRate: Float,
+    valDate: Date,
+    fye: Date,
     periods: Int
   }
 
   type Assumptions {
     discountRate: DiscountRate,
     taxRate: Float,
-    ltgr: Float
+    ltgr: Float,
     valDate: String,
     periods: Int
   }
@@ -72,13 +75,16 @@ const typeDefs = gql`
   type DCF {
     id: ID!,
     forecasts: [Forecast],
-    assumptions: Assumptions
+    assumptions: Assumptions,
+    pvOfDiscountedCashFlows: Float,
+    pvOfTerminalValue: Float,
   }
 
   input DiscountRateInput {
     riskFreeRate: Float,
     beta: Float,
     equityRiskPremium: Float,
+    bondRate: Float,
     taxRate: Float,
     debtToEquity: Float
   }
@@ -92,7 +98,7 @@ const typeDefs = gql`
     debtToEquity: Float,
     costOfDebt: Float,
     costOfEquity: Float,
-    value: Float
+    wacc: Float
   }
 
   type Query {
@@ -183,11 +189,6 @@ const typeDefs = gql`
   }
 
 Sample DCF Input:
-
-
-
-
-
 
 */
 

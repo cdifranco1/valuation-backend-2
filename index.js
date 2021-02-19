@@ -3,7 +3,7 @@ const typeDefs = require('./src/schema');
 const resolvers = require('./src/resolvers');
 const createStore = require('./src/store');
 
-const DcfAPI = require('./src/datasources/dcfAPI');
+const DCFStore = require('./src/datasources/DCFStore');
 
 const store = createStore();
 
@@ -12,7 +12,7 @@ const server = new ApolloServer({
   resolvers,
   dataSources: () => {
     return ({
-      dcfAPI: new DcfAPI(store.db().collection('dcfs'))
+      DCFStore: new DCFStore(store.db().collection('dcfs'))
     })
   }
 });

@@ -134,8 +134,8 @@ class Assumptions {
   constructor(discountRate, ltgr, valDate, periods, fye) {
     this.discountRate = discountRate
     this.ltgr = ltgr
-    this.valDate = new Date(valDate)
-    this.fye = new Date(fye)
+    this.valDate = new Date(valDate);
+    this.fye = new Date(fye);
     this.periods = periods
 
     // this is prob too precise - should be day over dayYears 
@@ -194,7 +194,6 @@ function buildDCF(DCFInput) {
   wacc.calcWACC()
 
   const assumptions = new Assumptions(wacc, ltgr, valDate, periods, fye)
-  // console.log(assumptions)
 
   const initializedForecasts = forecasts.map(forecastInput => {
     const currForecast = new Forecast(forecastInput);
@@ -211,3 +210,6 @@ function buildDCF(DCFInput) {
 
   return dcf;
 }
+
+// const testOutput = buildDCF(DCF1);
+// console.log(testOutput);
